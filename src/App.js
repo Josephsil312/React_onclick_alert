@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from "react";
+import "./App.css";
 
-function App() {
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import NotificationSound from "./notification-sound.mp3";
+
+
+const App = () => {
+  toast.configure();
+  const audioPlayer = useRef(null);
+  const Notify = () => {
+    audioPlayer.current.play();
+    toast.info("New shipment awarded!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: false
+    });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={Notify}>Notify</button>
+      <audio ref={audioPlayer} src={NotificationSound} />
     </div>
   );
-}
+};
 
 export default App;
